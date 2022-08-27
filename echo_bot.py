@@ -1,4 +1,4 @@
-# python
+# /usr/bin/python3
 # pylint: disable=C0116,W0613
 # This program is dedicated to the public domain under the CC0 license.
 
@@ -15,6 +15,7 @@ Press Ctrl-C on the command line or send a signal to the process to stop the
 bot.
 """
 
+import os 
 import logging
 from turtle import up
 
@@ -40,7 +41,6 @@ def start(update: Update, context: CallbackContext) -> None:
         reply_markup=ForceReply(selective=True),
     )
 
-
 def help_command(update: Update, context: CallbackContext) -> None:
     """Send a message when the command /help is issued."""
     update.message.reply_text('Help me!')
@@ -51,6 +51,12 @@ def echo_command(update: Update, context: CallbackContext) -> None:
     logger.info(update)
     update.message.reply_text(update.message.text)
 
+def send2wiki(update: Update, context: CallbackContext) -> None:
+    """Send to wiki the user message."""
+    logger.info("update")
+    os.system("python3 /home/rubikus/software/bots/test_wiki2.py update.message.text")  
+    
+    # update.message.reply_text(update.message.text)
 
 def main() -> None:
     """Start the bot."""
@@ -69,6 +75,7 @@ def main() -> None:
     # on non command i.e message - echo the message on Telegram
     # dispatcher.add_handler(MessageHandler(Filters.text & ~Filters.command, echo))
     dispatcher.add_handler(MessageHandler(Filters.text & ~Filters.command, echo_command))
+    dispatcher.add_handler(MessageHandler(Filters.text & ~Filters.command, send2wiki))
 
     # Start the Bot
     updater.start_polling()
