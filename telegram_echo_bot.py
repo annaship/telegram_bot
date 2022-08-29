@@ -61,7 +61,7 @@ def send2wiki(update: Update, context: CallbackContext) -> None:
 
     text2send = update.message.text
     cmd = 'python3 /home/rubikus/software/bots/print_to_wiki.py ' + text2send.replace("'", "\\'").replace('"', '\\"')
-    print("CMD: %s" % cmd)
+    # print("CMD: %s" % cmd)
 
     args2send = shlex.split(cmd)
 
