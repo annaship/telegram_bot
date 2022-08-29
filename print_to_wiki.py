@@ -6,7 +6,7 @@ import sys
 print("Argument List: %s!" % str(sys.argv))
 
 site = pywikibot.Site()
-page = pywikibot.Page(site, u"Тестирую_wikibot_APIs")
+page = pywikibot.Page(site, u"Ссылки_из_Телеграма_на_разбор")
 text = page.text 
 
 args_text = ' '.join(sys.argv[1:])
