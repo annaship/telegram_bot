@@ -1,4 +1,4 @@
-# /usr/bin/python3
+#!/usr/bin/python3
 # pylint: disable=C0116,W0613
 # This program is dedicated to the public domain under the CC0 license.
 
@@ -15,6 +15,7 @@ Press Ctrl-C on the command line or send a signal to the process to stop the
 bot.
 """
 
+import shlex, subprocess
 import os 
 import logging
 from turtle import up
@@ -55,7 +56,13 @@ def send2wiki(update: Update, context: CallbackContext) -> None:
     """Send to wiki the user message."""
     logger.info(update)
     # os.system("cd ~/software/core_stable; python3 pwb.py login")
-    os.system("python3 /home/rubikus/software/bots/print_to_wiki.py " + update.message.text)  
+    # os.system("python3 /home/rubikus/software/bots/print_to_wiki.py " + update.message.text)  
+    # print(update.message.text)
+
+    cmd = 'python3 /home/rubikus/software/bots/print_to_wiki.py ' + update.message.text
+    args2send = shlex.split(cmd)
+
+    p = subprocess.Popen(args2send)
     
     # update.message.reply_text(update.message.text)
 
