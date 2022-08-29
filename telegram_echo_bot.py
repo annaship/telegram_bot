@@ -54,8 +54,8 @@ def echo_command(update: Update, context: CallbackContext) -> None:
 def send2wiki(update: Update, context: CallbackContext) -> None:
     """Send to wiki the user message."""
     logger.info("update")
-    os.system("cd ~/software/core_stable; python3 pwb.py login")
-    os.system("python3 /home/rubikus/software/bots/test_wiki2.py " + update.message.text)  
+    # os.system("cd ~/software/core_stable; python3 pwb.py login")
+    os.system("python3 /home/rubikus/software/bots/print_to_wiki.py " + update.message.text)  
     
     # update.message.reply_text(update.message.text)
 
