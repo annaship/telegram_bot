@@ -70,8 +70,10 @@ def send2wiki(update: Update, context: CallbackContext) -> None:
 
     args2send = shlex.split(cmd)
 
-    p = subprocess.Popen(args2send)
-    
+    # p = subprocess.Popen(args2send)
+    out = subprocess.check_output(args2send)
+    print(out.decode('ascii')) # 'out' is a byte string
+
     # update.message.reply_text(update.message.text)
 
 def main() -> None:
