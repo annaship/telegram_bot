@@ -61,6 +61,12 @@ def send2wiki(update: Update, context: CallbackContext) -> None:
     # os.system("python3 /home/rubikus/software/bots/print_to_wiki.py " + update.message.text)  
     # print(update.message.text)
 
+    msg_id = str(update.message.message_id) 
+    # read old, check if the same, write if not
+    with open('/home/rubikus/logs/old_id.txt', 'w') as f:
+        f.write(msg_id)
+
+
     text2send = update.message.text
     text2send = text2send.replace("'", "\\'").replace('"', '\\"')
     text2send = unicodedata.normalize('NFC', text2send)
