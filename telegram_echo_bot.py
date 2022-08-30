@@ -18,6 +18,8 @@ bot.
 import shlex, subprocess
 import os 
 import logging
+import unicodedata
+
 from turtle import up
 
 from telegram import Update, ForceReply
@@ -60,7 +62,9 @@ def send2wiki(update: Update, context: CallbackContext) -> None:
     # print(update.message.text)
 
     text2send = update.message.text
-    cmd = 'python3 /home/rubikus/software/bots/print_to_wiki.py ' + text2send.replace("'", "\\'").replace('"', '\\"')
+    text2send = text2send.replace("'", "\\'").replace('"', '\\"')
+    text2send = unicodedata.normalize('NFC', text2send)
+    cmd = 'python3 /home/rubikus/software/bots/print_to_wiki.py ' + text2send
     # print("CMD: %s" % cmd)
 
     args2send = shlex.split(cmd)
