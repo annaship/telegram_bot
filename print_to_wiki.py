@@ -17,6 +17,6 @@ print("args_text: %s" % str(args_text))
 page.text = text + "<br>new text: " + str(args_text)
 
 # u"newText!"
-page.save(u"Edit comment")
+page.save(u"Bot insert", asynchronous = True)
 
 
