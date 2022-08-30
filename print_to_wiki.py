@@ -14,9 +14,9 @@ args_text = ' '.join(sys.argv[1:])
 args_text = args_text.replace("\r\n", "<br>").replace("\n", "<br>").replace("\r", "<br>")
 print("args_text: %s" % str(args_text))
 
-page.text = text + "<br>new text: " + str(args_text)
+page.text = text + "<br><br>'''new text''': " + str(args_text)
 
 # u"newText!"
-page.save(u"Bot insert", asynchronous = True)
+page.save(u"Bot insert")
 
 
