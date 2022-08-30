@@ -16,7 +16,7 @@ bot.
 """
 
 import shlex, subprocess
-import os 
+import os, sys 
 import logging
 import unicodedata
 
@@ -76,8 +76,7 @@ def send2wiki(update: Update, context: CallbackContext) -> None:
 def main() -> None:
     """Start the bot."""
     # Create the Updater and pass it your bot's token.
-    # updater = Updater("5666319215:AAGVzCny11PO0uIgyZAv8DkMkEklSKWh6zA")
-    updater = Updater("5292835511:AAH7bNR-XmY-oop3ZNOD0ma8X67b8rAgj6Q")
+    updater = Updater(sys.argv[1])
 
     # Get the dispatcher to register handlers
     dispatcher = updater.dispatcher
