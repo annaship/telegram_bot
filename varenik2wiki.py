@@ -17,21 +17,21 @@ def clean_url():
 	fixed_url = parse.urlunsplit((parts.scheme, parts.netloc, parts.path, encoded_query, parts.fragment))
 	return fixed_url
 
+def get_varenik_json():
+	req = Request(
+		url=clean_url(), 
+		headers={'User-Agent': 'Mozilla/5.0'}
+	)
+ 
+	webpage = urlopen(req).read()
+ 	#print(webpage.decode("UTF-8"))
+	return webpage.decode("UTF-8")
+
 #__main__
-req = Request(
-    url=clean_url(), 
-    headers={'User-Agent': 'Mozilla/5.0'}
-)
 
-webpage = urlopen(req).read()
-print(webpage.decode("UTF-8"))
+data = get_varenik_json()
+print(data)
 
-#works
-#webpage = urlopen(req)
-#pprint.pprint(json.load(webpage))
-
-#webpage = urlopen(req)
-#pprint.pprint(json.loads(webpage).decode("UTF-8"))
 
 # site = pywikibot.Site()
 # page = pywikibot.Page(site, u"Varenik json")
