@@ -36,8 +36,9 @@ def to_wiki(country, category, value):
 
 	print("page_name = %s" % page_name)
 	print("text: %s!" % str(new_text[:100]))
-
-	# page.save(u"Bot insert")
+	
+	page.text = new_text
+	page.save(u"Varenik update")
 
 #__main__
 
