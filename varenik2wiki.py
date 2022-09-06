@@ -21,11 +21,14 @@ req = Request(
     url=clean_url(), 
     headers={'User-Agent': 'Mozilla/5.0'}
 )
-webpage = urlopen(req).read()
-pprint.pprint(webpage)
+#webpage = urlopen(req).read()
+#pprint.pprint(webpage)
 #response = request.urlopen(fixed_url)
 
-#print(json.load(response))
+webpage = urlopen(req)
+pprint.pprint(json.load(webpage))
+
+#print(json.load(webpage))
 
 # site = pywikibot.Site()
 # page = pywikibot.Page(site, u"Varenik json")
