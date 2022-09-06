@@ -11,10 +11,14 @@ from urllib.request import urlopen
 
 # print("Argument List: %s!" % str(sys.argv))
 
-with urlopen('https://opensheet.elk.sh/1lWvfxzdlWNxWuWCW1rRWy4TON-XIuE4jOmlJmq5SYNA/%D0%9A%D1%80%D0%B0%D1%82%D0%BA%D0%B0%D1%8F') as resp:
-  project_info = json.load(resp)
+#with urlopen('https://opensheet.elk.sh/1lWvfxzdlWNxWuWCW1rRWy4TON-XIuE4jOmlJmq5SYNA/%D0%9A%D1%80%D0%B0%D1%82%D0%BA%D0%B0%D1%8F') as resp:
+#  project_info = json.load(resp)
+
+with urlopen('https://pypi.org/pypi/sampleproject/json') as resp:
+    project_info = json.load(resp)['info']
 
 pprint.pprint(project_info)
 # page.save(u"Bot insert")
+
 
 
