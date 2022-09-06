@@ -39,7 +39,12 @@ for i in j_data:
 	print("i = %s", i)
 	for k, v in i.items():
 		print("k = %s, v = %s" % (k, v))
-
+		if k == "Страна":
+			country = v
+		else:
+			category = k
+			value = v
+			print("country:category = %s:%s, value = %s" % (country, category, value[:100]))
 
 site = pywikibot.Site()
 #page_name = 
