@@ -10,7 +10,7 @@ from urllib import request
 
 varenik_json_url = 'https://opensheet.elk.sh/1lWvfxzdlWNxWuWCW1rRWy4TON-XIuE4jOmlJmq5SYNA/%D0%9F    %D0%BE%D0%BB%D0%BD%D0%B0%D1%8F'
 
-parts - parse.urlsplit(varenik_json_url)
+parts = parse.urlsplit(varenik_json_url)
 query_dict = parse.parse_qs(parts.query)
 encoded_query = parse.urlencode(query_dict)
 fixed_url = parse.urlunsplit((parts.scheme, parts.netloc, parts.path, encoded_query, parts.fragment))
