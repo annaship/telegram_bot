@@ -30,9 +30,13 @@ def get_varenik_json():
 #__main__
 
 data = get_varenik_json()
-print(data)
+#print(data)
+print("Type:", type(data))
+j_data = json.loads(data)
+print("Type j_data:", type(j_data))
 
-
+for i in j_data:
+	print("i = %s", i)
 # site = pywikibot.Site()
 # page = pywikibot.Page(site, u"Varenik json")
 # text = page.text 
