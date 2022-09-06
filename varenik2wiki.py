@@ -27,33 +27,37 @@ def get_varenik_json():
  	#print(webpage.decode("UTF-8"))
 	return webpage.decode("UTF-8")
 
+def to_wiki(country, category, value):
+	site = pywikibot.Site()
+	page_name = "%s:%s" % (country, category)
+	page = pywikibot.Page(site, page_name)
+	old_text = page.text 
+	new_text = value
+
+	print("page_name = %s" % page_name)
+	print("text: %s!" % str(new_text[:100]))
+
+	# page.save(u"Bot insert")
+
 #__main__
 
 data = get_varenik_json()
 #print(data)
-print("Type:", type(data))
+#print("Type:", type(data))
 j_data = json.loads(data)
-print("Type j_data:", type(j_data))
+#print("Type j_data:", type(j_data))
 
 for i in j_data:
-	print("i = %s", i)
+#	print("i = %s", i)
 	for k, v in i.items():
-		print("k = %s, v = %s" % (k, v))
+		#print("k = %s, v = %s" % (k, v))
 		if k == "Страна":
 			country = v
 		else:
 			category = k
 			value = v
-			print("country:category = %s:%s, value = %s" % (country, category, value[:100]))
-
-site = pywikibot.Site()
-#page_name = 
-#page = pywikibot.Page(site, u"Varenik json")
-#text = page.text 
-
-#print("text: %s!" % str(text))
-
-# page.save(u"Bot insert")
+			#print("country:category = %s:%s, value = %s" % (country, category, value[:100]))
+			to_wiki(country, category, value)
 
 
 
