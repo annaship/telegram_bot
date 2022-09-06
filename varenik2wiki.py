@@ -17,18 +17,21 @@ def clean_url():
 	fixed_url = parse.urlunsplit((parts.scheme, parts.netloc, parts.path, encoded_query, parts.fragment))
 	return fixed_url
 
+#__main__
 req = Request(
     url=clean_url(), 
     headers={'User-Agent': 'Mozilla/5.0'}
 )
-#webpage = urlopen(req).read()
-#pprint.pprint(webpage)
-#response = request.urlopen(fixed_url)
 
-webpage = urlopen(req)
-pprint.pprint(json.load(webpage))
+webpage = urlopen(req).read()
+print(webpage.decode("UTF-8"))
 
-#print(json.load(webpage))
+#works
+#webpage = urlopen(req)
+#pprint.pprint(json.load(webpage))
+
+#webpage = urlopen(req)
+#pprint.pprint(json.loads(webpage).decode("UTF-8"))
 
 # site = pywikibot.Site()
 # page = pywikibot.Page(site, u"Varenik json")
