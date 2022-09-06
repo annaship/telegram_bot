@@ -37,11 +37,16 @@ print("Type j_data:", type(j_data))
 
 for i in j_data:
 	print("i = %s", i)
-# site = pywikibot.Site()
-# page = pywikibot.Page(site, u"Varenik json")
-# text = page.text 
+	for k, v in i.items():
+		print("k = %s, v = %s" % (k, v))
 
-# print("Argument List: %s!" % str(sys.argv))
+
+site = pywikibot.Site()
+#page_name = 
+#page = pywikibot.Page(site, u"Varenik json")
+#text = page.text 
+
+#print("text: %s!" % str(text))
 
 # page.save(u"Bot insert")
 
