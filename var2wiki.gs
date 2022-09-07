@@ -1,10 +1,10 @@
 const SHORT_SHEET_NAME = "Краткая";
 const LONG_SHEET_NAME = "Полная";
-// const UPLOAD_URL = "";
+const UPLOAD_URL = "";
 
 function publishData() {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
-  // console.log(UPLOAD_URL);
+  console.log(UPLOAD_URL);
 
   var shortSheet = ss.getSheetByName(SHORT_SHEET_NAME);
   var shortData = shortSheet.getDataRange().getValues();
@@ -43,6 +43,7 @@ function onOpen() {
   var sheet = SpreadsheetApp.getActiveSpreadsheet();
   var entries = [
     { name : "опубликовать", functionName : "publishData"},
+    { name : "обновить в Вики", functionName : "publishToWiki"},
   ];
   sheet.addMenu("Вареник", entries);
 };
@@ -119,9 +120,7 @@ function getToken(cookiesStore) {
 }
 
 function publishToWiki() {
-  // var ss = SpreadsheetApp.getActiveSpreadsheet();
-
-  var ss = SpreadsheetApp.openById("");
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
 
   var shortSheet = ss.getSheetByName(SHORT_SHEET_NAME);
   var shortData = shortSheet.getDataRange().getValues();
@@ -135,23 +134,23 @@ function publishToWiki() {
   login2Wiki(cookiesStore, response0);
   crfsToken = getToken(cookiesStore);
 
-  // const topics = longData[1];
-  colNames = longData[0]
-  for (var row = 2; row < longData.length; row++) {
-    if (longData[row][1] == "") continue;
-    countryName = longData[row][0];
+  var myData = longData;
+  var colNames = myData[0];
+  for (var row = 2; row < myData.length; row++) {
+    if (myData[row][1] == "") continue;
+    var countryName = myData[row][0]
     // Logger.log(countryName);
 
-    for (var col = 4; col < longData[0].length; col++) {
-      // Logger.log(longData[row][col]);
-      topic = colNames[col];
+    for (var col = 4; col < myData[0].length; col++) {
+      // Logger.log(myData[row][col]);
+      var topic = colNames[col];
       // Logger.log(topic);
       url = WIKI_API_URL + "?action=edit";
       form = {
         token: crfsToken,
         bot: true,
         title: countryName + ":" + topic,
-        text: longData[row][col],
+        text: myData[row][col],
         format: "json",
       }
       response2 = UrlFetchApp.fetch(url, {
@@ -164,4 +163,6 @@ function publishToWiki() {
       Logger.log(response2);
     }
   }
+
 }
+
