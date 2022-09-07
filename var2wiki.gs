@@ -47,13 +47,8 @@ function onOpen() {
   sheet.addMenu("Вареник", entries);
 };
 
-
+// === To Wiki ===
 const WIKI_API_URL = "http://wikitest.rubikus.de/mw/api.php";
-
-// function colNames(sData) {
-  // colNames = sData[0];
-  // return colNames
-// }
 
 function startCookies() {
   var cookiesStore = [];
@@ -124,7 +119,9 @@ function getToken(cookiesStore) {
 }
 
 function publishToWiki() {
-  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  // var ss = SpreadsheetApp.getActiveSpreadsheet();
+
+  var ss = SpreadsheetApp.openById("");
 
   var shortSheet = ss.getSheetByName(SHORT_SHEET_NAME);
   var shortData = shortSheet.getDataRange().getValues();
@@ -138,23 +135,23 @@ function publishToWiki() {
   login2Wiki(cookiesStore, response0);
   crfsToken = getToken(cookiesStore);
 
-  // const topics = shortData[1];
-  colNames = shortData[0]
-  for (var row = 2; row < shortData.length; row++) {
-    if (shortData[row][1] == "") continue;
-    countryName = shortData[row][0]
-    Logger.log(countryName);
+  // const topics = longData[1];
+  colNames = longData[0]
+  for (var row = 2; row < longData.length; row++) {
+    if (longData[row][1] == "") continue;
+    countryName = longData[row][0];
+    // Logger.log(countryName);
 
-    for (var col = 4; col < shortData[0].length; col++) {
-      Logger.log(shortData[row][col]);
+    for (var col = 4; col < longData[0].length; col++) {
+      // Logger.log(longData[row][col]);
       topic = colNames[col];
-      Logger.log(topic);
+      // Logger.log(topic);
       url = WIKI_API_URL + "?action=edit";
       form = {
         token: crfsToken,
         bot: true,
         title: countryName + ":" + topic,
-        text: shortData[row][col],
+        text: longData[row][col],
         format: "json",
       }
       response2 = UrlFetchApp.fetch(url, {
@@ -167,5 +164,4 @@ function publishToWiki() {
       Logger.log(response2);
     }
   }
-
 }
