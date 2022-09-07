@@ -119,8 +119,10 @@ function getToken(cookiesStore) {
 }
 
 function publishToWiki() {
+  const startTime = Date.now();
+
   // var ss = SpreadsheetApp.getActiveSpreadsheet();
-  var ss = SpreadsheetApp.openById("1nvveq0icRf6cAgXzrTmv7sFZ8oHXbZoGsPEDELNDsTY");
+  var ss = SpreadsheetApp.openById("");
 
   var shortSheet = ss.getSheetByName(SHORT_SHEET_NAME);
   var shortData = shortSheet.getDataRange().getValues();
@@ -141,15 +143,16 @@ function publishToWiki() {
   for (var row = 2; row < myData.length; row++) {
     if (myData[row][1] == "") continue;
     var countryName = myData[row][1]
-    Logger.log(countryName);
+    // Logger.log(countryName);
 
     for (var col = 4; col < myData[0].length; col++) {
       // Logger.log(myData[row][col]);
       var topic = colNames[col];
-      Logger.log(topic);
+      if (topic == "") { continue; } // skip an empty column header
+      // Logger.log(topic);
       var content = myData[row][col] + "\n\n[[Category:Varenik]]"
       var pageName = "Varenik" + myDivider + countryName + myDivider + topic + myDivider + myPostfix
-      Logger.log(pageName);
+      // Logger.log(pageName);
       url = WIKI_API_URL + "?action=edit";
       form = {
         token: crfsToken,
@@ -165,7 +168,10 @@ function publishToWiki() {
         },
         payload: form
       });
-      Logger.log(response2);
+      // Logger.log(response2);
     }
   }
+  const endTime = Date.now();
+  var diffTime = endTime - startTime
+  Logger.log(diffTime);
 }
