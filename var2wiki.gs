@@ -107,6 +107,21 @@ function login2Wiki(cookiesStore, response) {
   Logger.log(response);
 }
 
+function getToken(cookiesStore) {
+  var url = WIKI_API_URL + "?action=query&meta=tokens&format=json";
+  response1 = UrlFetchApp.fetch(url, {
+    method: "GET",
+    headers: {
+      "Cookie": cookiesStore.join(';')
+    }
+  });
+  Logger.log(response1);
+
+  var responseData = JSON.parse(response1);
+  var crfsToken = responseData.query.tokens.csrftoken;
+  return crfsToken;
+}
+
 function publishToWiki() {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
 
@@ -120,47 +135,18 @@ function publishToWiki() {
 
   const [cookiesStore, response0] = startCookies();
   login2Wiki(cookiesStore, response0);
-//   var responseData = JSON.parse(response);
-//   var loginToken = responseData.query.tokens.logintoken;
-//   Logger.log(loginToken);
+  crfsToken = getToken(cookiesStore);
+  // var url = WIKI_API_URL + "?action=query&meta=tokens&format=json";
+  // response1 = UrlFetchApp.fetch(url, {
+  //   method: "GET",
+  //   headers: {
+  //     "Cookie": cookiesStore.join(';')
+  //   }
+  // });
+  // Logger.log(response1);
 
-//   url = WIKI_API_URL + "?action=login";
-//   var form = {
-//     lgname: "Jankri7@updater",
-//     lgpassword: "16u4nick7imdhtf25deqmlr0tkc3cv1e",
-//     lgtoken: loginToken,
-//     format: "json"
-//   }
-//   response = UrlFetchApp.fetch(url, {
-//     method: "POST",
-//     headers: {
-//       "Cookie": cookiesStore.join(';')
-//     },
-//     payload: form
-//   });
-//   var headers = response.getAllHeaders();
-//   var cookies = headers['Set-Cookie']; 
-//   if ((cookies != null) && (cookies[0].length == 1)) {
-//         cookies = new Array(1);              
-//         cookies[0] = headers['Set-Cookie']; 
-//   }  
-//   for (var i = 0; i < cookies.length; i++) {
-// //    cookies[i] = cookies[i].split( ';' )[0];
-//     cookiesStore.push(cookies[i].split( ';' )[0]);
-//   };
-//   Logger.log(response);
-
-  var url = WIKI_API_URL + "?action=query&meta=tokens&format=json";
-  response1 = UrlFetchApp.fetch(url, {
-    method: "GET",
-    headers: {
-      "Cookie": cookiesStore.join(';')
-    }
-  });
-  Logger.log(response1);
-
-  var responseData = JSON.parse(response1);
-  var crfsToken = responseData.query.tokens.csrftoken;
+  // var responseData = JSON.parse(response1);
+  // var crfsToken = responseData.query.tokens.csrftoken;
 
   const topics = shortData[1];
   for (var row = 2; row < shortData.length; row++) {
