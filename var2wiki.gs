@@ -1,5 +1,6 @@
 const SHORT_SHEET_NAME = "Краткая";
 const LONG_SHEET_NAME = "Полная";
+const UPLOAD_URL = "";
 
 function publishData() {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
@@ -49,10 +50,10 @@ function onOpen() {
 
 const WIKI_API_URL = "http://wikitest.rubikus.de/mw/api.php";
 
-function colNames(sData) {
-  colNames = sData[0];
-  return colNames
-}
+// function colNames(sData) {
+  // colNames = sData[0];
+  // return colNames
+// }
 
 function startCookies() {
   var cookiesStore = [];
@@ -136,23 +137,18 @@ function publishToWiki() {
   const [cookiesStore, response0] = startCookies();
   login2Wiki(cookiesStore, response0);
   crfsToken = getToken(cookiesStore);
-  // var url = WIKI_API_URL + "?action=query&meta=tokens&format=json";
-  // response1 = UrlFetchApp.fetch(url, {
-  //   method: "GET",
-  //   headers: {
-  //     "Cookie": cookiesStore.join(';')
-  //   }
-  // });
-  // Logger.log(response1);
 
-  // var responseData = JSON.parse(response1);
-  // var crfsToken = responseData.query.tokens.csrftoken;
-
-  const topics = shortData[1];
+  // const topics = shortData[1];
+  colNames = shortData[0]
   for (var row = 2; row < shortData.length; row++) {
     if (shortData[row][1] == "") continue;
+    countryName = shortData[row][0]
+    Logger.log(countryName);
 
     for (var col = 4; col < shortData[0].length; col++) {
+      Logger.log(col);
+      topic = colNames[col];
+      Logger.log(topic);
       url = WIKI_API_URL + "?action=edit";
       form = {
         token: crfsToken,
