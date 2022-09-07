@@ -1,6 +1,6 @@
 const SHORT_SHEET_NAME = "Краткая";
 const LONG_SHEET_NAME = "Полная";
-const UPLOAD_URL = "";
+// const UPLOAD_URL = "";
 
 function publishData() {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
@@ -146,14 +146,14 @@ function publishToWiki() {
     Logger.log(countryName);
 
     for (var col = 4; col < shortData[0].length; col++) {
-      Logger.log(col);
+      Logger.log(shortData[row][col]);
       topic = colNames[col];
       Logger.log(topic);
       url = WIKI_API_URL + "?action=edit";
       form = {
         token: crfsToken,
         bot: true,
-        title: "Template:varenik_" + shortData[row][1] + "_" + topics[col] + "_short",
+        title: countryName + ":" + topic,
         text: shortData[row][col],
         format: "json",
       }
