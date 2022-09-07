@@ -136,6 +136,7 @@ function publishToWiki() {
 
   var myData = longData;
   var myPostfix = "long"
+  var myDivider = "-";
   var colNames = myData[1];
   for (var row = 2; row < myData.length; row++) {
     if (myData[row][1] == "") continue;
@@ -147,7 +148,7 @@ function publishToWiki() {
       var topic = colNames[col];
       Logger.log(topic);
       var content = myData[row][col] + "\n\n[[Category:Varenik]]"
-      var pageName = "Varenik-" + countryName + "-" + topic + "-" + myPostfix
+      var pageName = "Varenik" + myDivider + countryName + myDivider + topic + myDivider + myPostfix
       Logger.log(pageName);
       url = WIKI_API_URL + "?action=edit";
       form = {
