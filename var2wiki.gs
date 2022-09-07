@@ -75,34 +75,7 @@ function startCookies() {
   return [cookiesStore, response]
 }
 
-function publishToWiki() {
-  var ss = SpreadsheetApp.getActiveSpreadsheet();
-
-  var shortSheet = ss.getSheetByName(SHORT_SHEET_NAME);
-  var shortData = shortSheet.getDataRange().getValues();
-  var longSheet = ss.getSheetByName(LONG_SHEET_NAME);
-  var longData = longSheet.getDataRange().getValues();
-
-//  Logger.log(shortData[2]);
-//  return;
-
-  const [cookiesStore, response] = startCookies();
-
-//   var url = WIKI_API_URL + "?action=query&meta=tokens&type=login&format=json";
-//   var response = UrlFetchApp.fetch(url, {
-//     'method' : 'GET'
-//   });
-//   var headers = response.getAllHeaders();
-//   var cookies = headers['Set-Cookie']; 
-//   if ((cookies != null) && (cookies[0].length == 1)) {
-//     cookies = new Array(1);              
-//     cookies[0] = headers['Set-Cookie']; 
-//   }  
-//   for (var i = 0; i < cookies.length; i++) {
-// //    cookies[i] = cookies[i].split( ';' )[0];
-//     cookiesStore.push(cookies[i].split( ';' )[0]);
-//   };
-
+function login2Wiki(cookiesStore, response) {
   var responseData = JSON.parse(response);
   var loginToken = responseData.query.tokens.logintoken;
   Logger.log(loginToken);
@@ -132,17 +105,61 @@ function publishToWiki() {
     cookiesStore.push(cookies[i].split( ';' )[0]);
   };
   Logger.log(response);
+}
+
+function publishToWiki() {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+
+  var shortSheet = ss.getSheetByName(SHORT_SHEET_NAME);
+  var shortData = shortSheet.getDataRange().getValues();
+  var longSheet = ss.getSheetByName(LONG_SHEET_NAME);
+  var longData = longSheet.getDataRange().getValues();
+
+//  Logger.log(shortData[2]);
+//  return;
+
+  const [cookiesStore, response0] = startCookies();
+  login2Wiki(cookiesStore, response0);
+//   var responseData = JSON.parse(response);
+//   var loginToken = responseData.query.tokens.logintoken;
+//   Logger.log(loginToken);
+
+//   url = WIKI_API_URL + "?action=login";
+//   var form = {
+//     lgname: "Jankri7@updater",
+//     lgpassword: "16u4nick7imdhtf25deqmlr0tkc3cv1e",
+//     lgtoken: loginToken,
+//     format: "json"
+//   }
+//   response = UrlFetchApp.fetch(url, {
+//     method: "POST",
+//     headers: {
+//       "Cookie": cookiesStore.join(';')
+//     },
+//     payload: form
+//   });
+//   var headers = response.getAllHeaders();
+//   var cookies = headers['Set-Cookie']; 
+//   if ((cookies != null) && (cookies[0].length == 1)) {
+//         cookies = new Array(1);              
+//         cookies[0] = headers['Set-Cookie']; 
+//   }  
+//   for (var i = 0; i < cookies.length; i++) {
+// //    cookies[i] = cookies[i].split( ';' )[0];
+//     cookiesStore.push(cookies[i].split( ';' )[0]);
+//   };
+//   Logger.log(response);
 
   var url = WIKI_API_URL + "?action=query&meta=tokens&format=json";
-  response = UrlFetchApp.fetch(url, {
+  response1 = UrlFetchApp.fetch(url, {
     method: "GET",
     headers: {
       "Cookie": cookiesStore.join(';')
     }
   });
-  Logger.log(response);
+  Logger.log(response1);
 
-  var responseData = JSON.parse(response);
+  var responseData = JSON.parse(response1);
   var crfsToken = responseData.query.tokens.csrftoken;
 
   const topics = shortData[1];
@@ -158,14 +175,14 @@ function publishToWiki() {
         text: shortData[row][col],
         format: "json",
       }
-      response = UrlFetchApp.fetch(url, {
+      response2 = UrlFetchApp.fetch(url, {
         method: "POST",
         headers: {
           "Cookie": cookiesStore.join(';')
         },
         payload: form
       });
-      Logger.log(response);
+      Logger.log(response2);
     }
   }
 
