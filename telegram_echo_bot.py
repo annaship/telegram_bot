@@ -36,11 +36,15 @@ logger = logging.getLogger(__name__)
 def start(update: Update, context: CallbackContext) -> None:
     """Send a message when the command /start is issued."""
     logger.info(update)
-    user = update.effective_user
-    update.message.reply_markdown_v2(
+    logger.info("username = " + update.effective_user.name)
+    blacklist = ['@demonsterz', '@AnyaShip3'] 
+    
+    if not update.effective_user.name in blacklist:
+      user = update.effective_user
+      update.message.reply_markdown_v2(
         fr'Hi {user.mention_markdown_v2()}\!',
-        reply_markup=ForceReply(selective=True),
-    )
+          reply_markup=ForceReply(selective=True),
+      )
 
 def help_command(update: Update, context: CallbackContext) -> None:
     """Send a message when the command /help is issued."""
@@ -53,17 +57,18 @@ def echo_command(update: Update, context: CallbackContext) -> None:
 
 def send2wiki(update: Update, context: CallbackContext) -> None:
     """Send to wiki the user message."""
-    logger.info(update)
+    logger.info(update.effective_user.name)
+    blacklist = ['@demonsterz']
+    if not update.effective_user.name in blacklist:
+      msg_id = str(update.message.message_id) 
+      text2send = msg_id + " ## " + update.message.text
+      text2send = text2send.replace("'", "\\'").replace('"', '\\"')
+      text2send = unicodedata.normalize('NFC', text2send)
+      cmd = 'python3 /home/rubikus/software/bots/print_to_wiki.py ' + text2send
+      # print("CMD: %s" % cmd)
+      args2send = shlex.split(cmd)
 
-    msg_id = str(update.message.message_id) 
-    text2send = msg_id + " ## " + update.message.text
-    text2send = text2send.replace("'", "\\'").replace('"', '\\"')
-    text2send = unicodedata.normalize('NFC', text2send)
-    cmd = 'python3 /home/rubikus/software/bots/print_to_wiki.py ' + text2send
-    # print("CMD: %s" % cmd)
-    args2send = shlex.split(cmd)
-
-    p = subprocess.run(args2send)
+      p = subprocess.run(args2send)
 
 
 def main() -> None:
