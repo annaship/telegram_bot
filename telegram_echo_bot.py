@@ -70,6 +70,13 @@ def send2wiki(update: Update, context: CallbackContext) -> None:
 
       p = subprocess.run(args2send)
 
+    #TODO: change to a function 
+    if update.effective_user.name in blacklist:
+      msg_id = str(update.message.message_id) 
+      logger.info("message_id %s, bad username %s", msg_id, update.effective_user.name) 
+      context.bot.deleteMessage (message_id = update.message.message_id,
+                             chat_id = update.message.chat_id)
+
 
 def main() -> None:
     """Start the bot."""
