@@ -19,6 +19,7 @@ import logging
 import unicodedata
 
 from turtle import up
+import datetime
 
 from telegram import Update, ForceReply
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
@@ -37,7 +38,7 @@ def start(update: Update, context: CallbackContext) -> None:
     """Send a message when the command /start is issued."""
     logger.info(update)
     logger.info("username = " + update.effective_user.name)
-    blacklist = ['@demonsterz', '@AnyaShip3'] 
+    blacklist = ['@demonsterz'] 
     
     if not update.effective_user.name in blacklist:
       user = update.effective_user
@@ -48,20 +49,28 @@ def start(update: Update, context: CallbackContext) -> None:
 
 def help_command(update: Update, context: CallbackContext) -> None:
     """Send a message when the command /help is issued."""
-    update.message.reply_text('Help me!')
+    update.message.reply_text("update.message")
 
 def echo_command(update: Update, context: CallbackContext) -> None:
     """Echo the user message."""
     logger.info(update)
     update.message.reply_text(update.message.text)
 
+def time_split():
+    current_time = datetime.datetime.now()
+    now_date = str(current_time.year) + " " + str(current_time.month) + " " + str(current_time.day) 
+    return now_date
+
+
 def send2wiki(update: Update, context: CallbackContext) -> None:
     """Send to wiki the user message."""
+    now_date = time_split()
+
     logger.info(update.effective_user.name)
     blacklist = ['@demonsterz']
     if not update.effective_user.name in blacklist:
       msg_id = str(update.message.message_id) 
-      text2send = msg_id + " ## " + update.message.text
+      text2send = now_date + "<br/>" + msg_id + " ## " + update.message.text
       text2send = text2send.replace("'", "\\'").replace('"', '\\"')
       text2send = unicodedata.normalize('NFC', text2send)
       cmd = 'python3 /home/rubikus/software/bots/print_to_wiki.py ' + text2send
@@ -73,7 +82,7 @@ def send2wiki(update: Update, context: CallbackContext) -> None:
     #TODO: change to a function 
     if update.effective_user.name in blacklist:
       msg_id = str(update.message.message_id) 
-      logger.info("message_id %s, bad username %s", msg_id, update.effective_user.name) 
+      logger.info("message_id %s, bad usernamei %s", msg_id, update.effective_user.name) 
       context.bot.deleteMessage (message_id = update.message.message_id,
                              chat_id = update.message.chat_id)
 
